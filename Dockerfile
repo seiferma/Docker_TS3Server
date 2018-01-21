@@ -1,5 +1,5 @@
 FROM seiferma-docker-registry.bintray.io/seiferma/alpine-glibc:latest
-ENV TS3_VERSION=3.0.13.8
+ENV TS3_VERSION=3.1.7
 
 WORKDIR /ts3
 
