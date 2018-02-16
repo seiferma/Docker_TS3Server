@@ -17,6 +17,7 @@ RUN wget http://dl.4players.de/ts/releases/${TS3_VERSION}/teamspeak3-server_linu
     rm -f ts3server_startscript.sh && \
     rm -rf redist && \
     rm -rf serverquerydocs && \
+    apk --no-cache add ca-certificates && \
     TS3_VERSION=
 
 # Add default configuration and start script
