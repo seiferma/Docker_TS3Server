@@ -1,5 +1,5 @@
 FROM seiferma/alpine-glibc:latest
-ENV TS3_VERSION=3.7.1
+ENV TS3_VERSION=3.8.0
 
 WORKDIR /ts3
 
