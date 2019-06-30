@@ -1,10 +1,8 @@
-FROM seiferma/alpine-glibc:latest
-ENV TS3_VERSION=3.8.0
-
+FROM alpine:latest AS builder
+ENV TS3_VERSION=3.9.0
 WORKDIR /ts3
 
-# Setup ts3 server
-RUN wget http://dl.4players.de/ts/releases/${TS3_VERSION}/teamspeak3-server_linux_amd64-${TS3_VERSION}.tar.bz2 -O server.tar.bz2 && \
+RUN wget https://files.teamspeak-services.com/releases/server/${TS3_VERSION}/teamspeak3-server_linux_amd64-${TS3_VERSION}.tar.bz2 -O server.tar.bz2 && \
     tar xjf server.tar.bz2 && \
     rm server.tar.bz2 && \
     mv teamspeak3-server_linux_amd64/* ./ && \
@@ -16,9 +14,20 @@ RUN wget http://dl.4players.de/ts/releases/${TS3_VERSION}/teamspeak3-server_linu
     rm -rf tsdns && \
     rm -f ts3server_startscript.sh && \
     rm -rf redist && \
-    rm -rf serverquerydocs && \
-    apk --no-cache add ca-certificates libstdc++ && \
-    TS3_VERSION=
+    rm -rf serverquerydocs
+
+
+
+FROM debian:stable-slim
+WORKDIR /ts3
+
+# Setup dependencies
+RUN apt-get update && \
+    apt-get install -y ca-certificates && \
+    rm -rf /var/lib/apt/lists/*
+
+# Copy ts3 server from builder
+COPY --from=builder /ts3 /ts3/
 
 # Add default configuration and start script
 COPY ["ts3server.ini", "start.sh", "./"]
@@ -31,8 +40,9 @@ ENV DATA_VOLUME=/data
 
 # Configure user rights
 RUN addgroup ts3 && \
-    adduser -G ts3 -h /ts3 -s /bin/false -D ts3 && \
+    adduser --disabled-password --ingroup ts3 --home /ts3 --shell /bin/false ts3 && \
     chown -R ts3:ts3 ./ && \
+    ls -la && \
     mkdir -p ${DATA_VOLUME} && \
     chown ts3:ts3 ${DATA_VOLUME}
 USER ts3
