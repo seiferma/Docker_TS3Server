@@ -1,5 +1,5 @@
 FROM alpine:latest AS builder
-ENV TS3_VERSION=3.10.2
+ENV TS3_VERSION=3.11.0
 WORKDIR /ts3
 
 RUN wget https://files.teamspeak-services.com/releases/server/${TS3_VERSION}/teamspeak3-server_linux_amd64-${TS3_VERSION}.tar.bz2 -O server.tar.bz2 && \
