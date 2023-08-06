@@ -1,5 +1,5 @@
 FROM alpine:latest AS builder
-ENV TS3_VERSION=3.13.7
+ARG TS3_VERSION
 WORKDIR /ts3
 
 RUN wget https://files.teamspeak-services.com/releases/server/${TS3_VERSION}/teamspeak3-server_linux_amd64-${TS3_VERSION}.tar.bz2 -O server.tar.bz2 && \
@@ -23,6 +23,7 @@ WORKDIR /ts3
 
 # Setup dependencies
 RUN apt-get update && \
+    apt-get upgrade -y && \
     apt-get install -y ca-certificates && \
     rm -rf /var/lib/apt/lists/*
 
