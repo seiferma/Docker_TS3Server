@@ -1,0 +1,15 @@
+{
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "extends": [
+        "config:recommended",
+        ":configMigration",
+        "github>seiferma/renovate-selfhosted:preset-docker"
+    ],
+    "dependencyDashboard": false,
+    "customDatasources": {
+        "ts3server": {
+            "defaultRegistryUrlTemplate": "https://files.teamspeak-services.com/releases/server/index.html",
+            "format": "html"
+        }
+    }
+}

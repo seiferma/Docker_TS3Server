@@ -1,4 +1,5 @@
 variable "VERSION" {
+  # renovate: datasource=custom.ts3server depName=ts3-server
   default = "3.13.7"
 }
 
