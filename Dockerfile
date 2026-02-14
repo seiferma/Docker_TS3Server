@@ -18,7 +18,7 @@ RUN wget https://files.teamspeak-services.com/releases/server/${TS3_VERSION}/tea
 
 
 
-FROM alpine:latest
+FROM alpine:3.23
 WORKDIR /ts3
 
 # Setup dependencies
